@@ -1,0 +1,16 @@
+{
+  "name": "ranzx-spy",
+  "version": "1.0.0",
+  "description": "Terminal UI + server client sederhana",
+  "main": "client.js",
+  "scripts": {
+    "start": "node client.js",
+    "server": "node server.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "readline-sync": "^1.4.10",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2"
+  }
+      }
