@@ -16,14 +16,30 @@ io.on("connection", (socket) => {
         if (!name) return;
 
         users[name] = socket.id;
-        console.log(`🟢 User masuk: ${name}`);
+
+        console.clear();
+        console.log("📡 DAFTAR USER AKTIF:\n");
+
+        Object.keys(users).forEach((u, i) => {
+            console.log(`${i + 1}. ${u}`);
+        });
+
+        console.log("\n💡 Ketik /blok nama untuk blok user");
     });
 
     socket.on("disconnect", () => {
         for (let name in users) {
             if (users[name] === socket.id) {
-                console.log(`🔴 User keluar: ${name}`);
                 delete users[name];
+
+                console.clear();
+                console.log("📡 DAFTAR USER AKTIF:\n");
+
+                Object.keys(users).forEach((u, i) => {
+                    console.log(`${i + 1}. ${u}`);
+                });
+
+                console.log("\n💡 Ketik /blok nama untuk blok user");
             }
         }
     });
@@ -42,10 +58,11 @@ rl.on("line", (input) => {
 
         if (users[target]) {
             io.to(users[target]).emit("blocked");
-            console.log(`⛔ ${target} diblokir`);
             delete users[target];
+
+            console.log(`\n⛔ ${target} berhasil diblokir`);
         } else {
-            console.log("❌ User tidak ditemukan");
+            console.log("\n❌ User tidak ditemukan");
         }
     }
 });
