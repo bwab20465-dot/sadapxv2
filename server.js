@@ -1,13 +1,20 @@
 const { Server } = require("socket.io");
-const io = new Server(3000);
+
+const PORT = 3000;
+const io = new Server(PORT, {
+    cors: { origin: "*" }
+});
 
 let users = {};
 
-console.log("🔥 Server aktif di port 3000...\n");
+console.log(`🔥 Server aktif di port ${PORT}...\n`);
 
 io.on("connection", (socket) => {
+    console.log("🔌 Client terhubung:", socket.id);
 
     socket.on("register", (name) => {
+        if (!name) return;
+
         users[name] = socket.id;
         console.log(`🟢 User masuk: ${name}`);
     });
