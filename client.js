@@ -21,7 +21,7 @@ if (pass !== "1234") {
 let name = readline.question("Masukkan nama kamu: ");
 
 // GANTI IP JIKA BEDA DEVICE
-const socket = io("http://127.0.0.1/8");
+const socket = io("http://localhost:3000");
 
 socket.on("connect", () => {
     socket.emit("register", name);
