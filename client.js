@@ -20,14 +20,27 @@ if (pass !== "1234") {
 // INPUT NAMA
 let name = readline.question("Masukkan nama kamu: ");
 
-// GANTI IP JIKA BEDA DEVICE
-const socket = io("http://localhost:3000");
+console.log("\n⏳ Menghubungkan ke server...\n");
 
+// GANTI JIKA BEDA DEVICE
+const socket = io("http://localhost:3000", {
+    reconnection: true,
+    reconnectionAttempts: 5,
+    timeout: 5000
+});
+
+// KONEKSI BERHASIL
 socket.on("connect", () => {
+    console.log(chalk.green("✔ Terhubung ke server"));
     socket.emit("register", name);
-    console.log(chalk.green("\n✔ Terhubung ke server sebagai: " + name));
 
     startScan();
+});
+
+// ERROR HANDLING
+socket.on("connect_error", () => {
+    console.log(chalk.red("❌ Gagal connect ke server! Pastikan server hidup."));
+    process.exit();
 });
 
 // SCAN
